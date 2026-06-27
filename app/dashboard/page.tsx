@@ -56,7 +56,7 @@ export default function DashboardPage() {
             <p className="text-sm font-medium text-accent">Developer Dashboard</p>
             <h1 className="mt-2 text-4xl font-semibold text-primary">API operations</h1>
             <p className="mt-3 max-w-2xl text-secondary">
-              Generate development keys, monitor usage, and test UI/UX quote endpoints.
+              Manage legacy development utilities and private workspace operations for the portfolio build.
             </p>
           </div>
           <Button onClick={generateKey} variant="accent">

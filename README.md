@@ -1,6 +1,6 @@
-# MotivOS
+# Preethi Suresh Portfolio
 
-A premium dark-themed quote SaaS and public API for design, creativity, productivity, UX, startup, and work motivation.
+A dark, immersive product design portfolio for Preethi Suresh. The site uses oversized editorial typography, parallax motion, sticky case-study storytelling, and an AI Playground section featuring MotivOS and RUX.AI Design.
 
 ## Stack
 
@@ -8,67 +8,49 @@ A premium dark-themed quote SaaS and public API for design, creativity, producti
 - React 19
 - TypeScript
 - Tailwind CSS
+- Lucide icons
 - Prisma
-- PostgreSQL
-- Vercel
-- Stripe-ready billing schema
 - PostHog-ready analytics setup
 
-Authentication is intentionally skipped in this initial build. The dashboard uses local development key generation, while the database schema and docs are ready for NextAuth, Google, GitHub, and email login in the next phase.
+## Main Files
 
-## Routes
+- `app/page.tsx` - Portfolio homepage
+- `app/globals.css` - Global styles, parallax visuals, responsive portfolio styling
+- `app/layout.tsx` - App metadata and shared layout
+- `components/` - Shared UI components
+- `lib/` - Utilities and supporting app code
+- `prisma/` - Existing database schema and seed setup
 
-- `/` - Public website
-- `/docs` - API documentation
-- `/dashboard` - Developer dashboard
-- `/admin` - Admin panel shell
-- `/api/health` - Operational health check
+## Portfolio Sections
 
-## API
-
-- `GET /api/v1/quote/today`
-- `GET /api/v1/quote/random`
-- `GET /api/v1/quotes`
-- `GET /api/v1/quotes/category/:category`
-- `GET /api/v1/search?q=focus`
-- `POST /api/v1/api-key`
-- `DELETE /api/v1/api-key`
+- Hero introduction with dark parallax art direction
+- Selected work case-study panels
+- AI Playground with MotivOS and RUX.AI Design
+- Method and design principles
+- Contact footer
 
 ## Local Setup
 
 ```bash
 npm install
-cp .env.example .env
-npm run db:generate
 npm run dev
 ```
 
-## Folder Structure
+The development server usually runs at:
 
 ```txt
-app/
-  api/
-  admin/
-  dashboard/
-  docs/
-components/
-  ui/
-docs/
-lib/
-prisma/
+http://localhost:3000
 ```
 
-For PostgreSQL-backed development:
+If port `3000` is already in use, Next.js will start on the next available port, such as `3001`.
+
+## Production Build
 
 ```bash
-npm run db:push
-npm run db:seed
+npm run build
+npm run start
 ```
 
-## Deployment
+## Notes
 
-1. Create a Vercel project.
-2. Add `DATABASE_URL` and `NEXT_PUBLIC_APP_URL`.
-3. Connect a PostgreSQL database.
-4. Run `npm run build`.
-5. Add Stripe, PostHog, and NextAuth environment variables when those integrations are enabled.
+This project was redesigned from an older API/SaaS starter into a portfolio website. Some legacy routes and backend utilities may still exist in the repository, but the public homepage is now the portfolio experience.

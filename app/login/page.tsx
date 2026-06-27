@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowLeft, Github, KeyRound, Lock, Mail } from "lucide-react";
+import { ArrowLeft, Github, LayoutGrid, Lock, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 
@@ -14,20 +14,20 @@ export default function LoginPage() {
 
         <div className="py-12">
           <div className="mb-6 grid h-12 w-12 place-items-center rounded-md border border-primary/20 bg-primary text-background">
-            UQ
+            PS
           </div>
           <h1 className="text-5xl font-semibold tracking-normal text-primary">
-            Login to manage quote APIs.
+            Login to manage portfolio content.
           </h1>
           <p className="mt-5 max-w-md text-base leading-7 text-secondary">
-            Access API keys, copy quote endpoints, and test UI/UX quote responses before adding them to your site.
+            Access private drafts, case-study notes, and content tools for the portfolio workspace.
           </p>
         </div>
 
         <div className="grid gap-3 text-sm text-secondary sm:grid-cols-3">
           <div className="rounded-md border border-border bg-surface p-4">
-            <KeyRound className="mb-4 h-4 w-4 text-primary" />
-            API keys
+            <LayoutGrid className="mb-4 h-4 w-4 text-primary" />
+            Case studies
           </div>
           <div className="rounded-md border border-border bg-surface p-4">
             <Lock className="mb-4 h-4 w-4 text-primary" />
@@ -94,7 +94,7 @@ export default function LoginPage() {
           <p className="mt-6 text-center text-sm text-secondary">
             New here?{" "}
             <Link href="/dashboard" className="text-primary hover:text-secondary">
-              Create a free API account
+              Request studio access
             </Link>
           </p>
         </Card>

@@ -7,7 +7,7 @@ export default function NotFound() {
       <div className="max-w-md text-center">
         <p className="text-sm font-medium text-accent">404</p>
         <h1 className="mt-3 text-4xl font-semibold text-primary">Page not found</h1>
-        <p className="mt-4 text-secondary">The route you requested is not part of this UXQuote API build.</p>
+        <p className="mt-4 text-secondary">The route you requested is not part of this portfolio build.</p>
         <Button asChild className="mt-8" variant="secondary">
           <Link href="/">Return home</Link>
         </Button>
