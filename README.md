@@ -25,9 +25,16 @@ A dark, immersive product design portfolio for Preethi Suresh. The site uses ove
 
 - Hero introduction with dark parallax art direction
 - Selected work case-study panels
+- Elaborated UX case-study pages under `/work/[slug]`
 - AI Playground with MotivOS and RUX.AI Design
 - Method and design principles
 - Contact footer
+
+## Case Study Routes
+
+- `/work/daily-operating-rhythm`
+- `/work/visible-intelligence`
+- `/work/operational-clarity`
 
 ## Local Setup
 

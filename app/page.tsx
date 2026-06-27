@@ -1,51 +1,110 @@
 "use client";
 
 import Link from "next/link";
+import type { Route } from "next";
 import {
   ArrowUpRight,
   BrainCircuit,
   ChevronDown,
   LayoutGrid,
+  MailSearch,
   Menu,
   MousePointer2,
   PenTool,
   Sparkles,
+  Stethoscope,
   WandSparkles,
+  WalletCards,
   X
 } from "lucide-react";
+import type { CSSProperties } from "react";
 import { useEffect, useMemo, useState } from "react";
 
 type ParallaxStyle = {
   transform: string;
 };
 
-const work = [
+const projects = [
   {
+    slug: "auralcare-ai-doctor-dashboard",
     number: "01",
-    eyebrow: "Consumer UX / Behavior Design",
-    title: "Turning ambition into a daily operating rhythm.",
+    name: "AuralCare",
+    eyebrow: "Doctor dashboard / AI voice scheduling",
+    platform: "Responsive web application",
+    theme: "Dark clinical command center",
+    title: "Helping doctors add, manage, and understand appointments through AI voice assistance.",
     body:
-      "A motivation and planning system shaped around intent, energy, friction, and tiny commitments that compound over time.",
-    details: ["North-star strategy", "Habit loop architecture", "Mobile-first interaction model"],
-    tone: "work-card-a"
+      "A web dashboard for busy doctors who need to capture appointment intent while moving between consultations. The assistant listens, confirms details, checks conflicts, and creates the appointment with a clinical audit trail.",
+    icon: Stethoscope,
+    accent: "#42E8B4",
+    secondary: "#7AA8FF",
+    typography: "Inter for dense clinical UI, IBM Plex Mono style timestamps for confidence states",
+    colors: ["#071110", "#101B1A", "#42E8B4", "#7AA8FF", "#F7FBFF"],
+    research: [
+      "Doctors often schedule between patient conversations, so the flow must tolerate fragmented attention.",
+      "Voice input is fastest only when the system repeats the structured appointment before saving.",
+      "Clinical dashboards need clear confidence and edit states because incorrect time, patient, or reason data has operational cost."
+    ],
+    users: ["Primary care doctors", "Clinic coordinators", "Specialists with repeat follow-ups"],
+    flows: ["Voice capture", "AI parsing", "Conflict check", "Doctor confirmation", "Calendar entry"],
+    lowFi: ["Voice dock", "Today timeline", "Patient queue", "Confirmation drawer"],
+    highFi: ["AI appointment command bar", "Smart calendar", "Patient context panel", "Conflict resolution modal"],
+    screens: ["Dashboard", "Voice add", "Patient detail", "Schedule review"],
+    outcome: "Reduced scheduling friction by designing a voice-first workflow that still gives doctors full visual control."
   },
   {
+    slug: "mailtrace-email-footprint",
     number: "02",
-    eyebrow: "AI Product / Trust Patterns",
-    title: "Designing visible intelligence for uncertain moments.",
+    name: "MailTrace",
+    eyebrow: "Privacy utility / Email footprint tracker",
+    platform: "Light themed mobile application",
+    theme: "Clean privacy-first mobile app",
+    title: "Showing people where their email is used across apps, websites, subscriptions, and services.",
     body:
-      "A framework for explainable AI states, confidence levels, editability, and human review across product workflows.",
-    details: ["AI decision states", "Research synthesis", "Design system foundations"],
-    tone: "work-card-b"
+      "A mobile app that maps a user's email footprint, highlights risky reuse, and helps them unsubscribe, rotate aliases, or secure connected accounts without feeling overwhelmed.",
+    icon: MailSearch,
+    accent: "#315CFF",
+    secondary: "#12B981",
+    typography: "Geometric sans for approachable consumer clarity with calm privacy labels",
+    colors: ["#F8FAFC", "#FFFFFF", "#315CFF", "#12B981", "#1D2939"],
+    research: [
+      "Users know their inbox is crowded, but they do not know which services still hold their email identity.",
+      "Privacy anxiety rises when findings are presented as alarms; grouping by action makes the experience calmer.",
+      "A mobile tracker must separate verified connections from inferred matches to build trust."
+    ],
+    users: ["Privacy-conscious consumers", "Freelancers with many accounts", "People cleaning old subscriptions"],
+    flows: ["Connect inbox", "Scan services", "Classify risk", "Review app/site usage", "Take action"],
+    lowFi: ["Onboarding", "Discovery map", "Risk list", "Action sheet"],
+    highFi: ["Footprint home", "Service profile", "Risk insights", "Unsubscribe workflow"],
+    screens: ["Scan", "Map", "Details", "Actions"],
+    outcome: "Created a light, calm mobile system that turns invisible email usage into a prioritized privacy checklist."
   },
   {
+    slug: "spendlens-receipt-expenses",
     number: "03",
-    eyebrow: "Enterprise UX / Service Design",
-    title: "Making dense operational work feel navigable.",
+    name: "SpendLens",
+    eyebrow: "Smart expense tracking / Receipt AI",
+    platform: "Dark themed mobile application",
+    theme: "Premium personal finance app",
+    title: "Letting users track expenses by sharing receipts and letting AI do the entry work.",
     body:
-      "An information architecture and dashboard model that helps teams move from scanning to prioritizing to action.",
-    details: ["Journey mapping", "Dashboard UX", "Cross-functional facilitation"],
-    tone: "work-card-c"
+      "A mobile expense tracker where users share a receipt photo, PDF, or screenshot. The app extracts merchant, amount, taxes, category, split items, and recurring patterns before adding a clean expense entry.",
+    icon: WalletCards,
+    accent: "#F7C948",
+    secondary: "#FF7A5C",
+    typography: "Inter for financial clarity with tabular numeric styling for amounts",
+    colors: ["#080A0D", "#151922", "#F7C948", "#FF7A5C", "#F6F0E8"],
+    research: [
+      "Manual expense entry fails because users delay it until receipts pile up.",
+      "People want automation, but they need a review step before money data is saved.",
+      "Item-level receipt parsing unlocks smarter budgets, shared expenses, and category corrections."
+    ],
+    users: ["Young professionals", "Small business owners", "Roommates splitting expenses"],
+    flows: ["Share receipt", "AI extraction", "Review fields", "Confirm category", "Budget update"],
+    lowFi: ["Receipt intake", "Parsed fields", "Budget impact", "History"],
+    highFi: ["Receipt scanner", "AI review card", "Expense detail", "Smart insights"],
+    screens: ["Capture", "Review", "Insights", "Wallet"],
+    outcome: "Designed a receipt-first expense flow that reduces manual entry while keeping user trust at the center."
   }
 ];
 
@@ -59,7 +118,7 @@ const playground = [
     modes: ["goal memory", "energy-aware prompts", "weekly reset"]
   },
   {
-    name: "RUX.AI Design",
+    name: "Refyno.AI",
     tag: "research UX design intelligence",
     copy:
       "A copilot for designers that clusters research, critiques UX patterns, and turns scattered findings into clearer product direction.",
@@ -197,59 +256,14 @@ export default function Home() {
       </section>
 
       <section id="work" className="relative z-10 mx-auto max-w-[1500px] px-4 py-24 sm:px-6 lg:px-8">
-        <div className="section-head">
-          <p className="section-label">Selected work</p>
-          <h2>Case studies designed as systems, not isolated screens.</h2>
+        <div className="section-head project-section-head">
+          <p className="section-label">Product Case Studies</p>
+          <h2>Product stories</h2>
         </div>
 
-        <div className="mt-12 grid gap-8">
-          {work.map((item) => (
-            <article key={item.number} className={`case-study ${item.tone}`}>
-              <div className="case-copy">
-                <p className="case-number">{item.number}</p>
-                <p className="case-eyebrow">{item.eyebrow}</p>
-                <h3>{item.title}</h3>
-                <p>{item.body}</p>
-                <div className="case-tags">
-                  {item.details.map((detail) => (
-                    <span key={detail}>{detail}</span>
-                  ))}
-                </div>
-              </div>
-              <div className="case-art" aria-hidden="true">
-                <div className="artifact-shell">
-                  <div className="artifact-topbar">
-                    <span />
-                    <span />
-                    <span />
-                  </div>
-                  <div className="artifact-layout">
-                    <div className="artifact-rail">
-                      <span />
-                      <span />
-                      <span />
-                      <span />
-                    </div>
-                    <div className="artifact-main">
-                      <div className="artifact-hero-line" />
-                      <div className="artifact-grid">
-                        <span />
-                        <span />
-                        <span />
-                        <span />
-                      </div>
-                      <div className="artifact-chart">
-                        <i />
-                        <i />
-                        <i />
-                        <i />
-                        <i />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </article>
+        <div className="project-stack mt-14">
+          {projects.map((project) => (
+            <ProjectCase key={project.number} project={project} />
           ))}
         </div>
       </section>
@@ -258,7 +272,7 @@ export default function Home() {
         <div className="playground-marquee" aria-hidden="true">
           <span>AI Playground</span>
           <span>MotivOS</span>
-          <span>RUX.AI Design</span>
+          <span>Refyno.AI</span>
         </div>
 
         <div className="mx-auto max-w-[1500px] px-4 sm:px-6 lg:px-8">
@@ -355,5 +369,114 @@ export default function Home() {
         </div>
       </footer>
     </main>
+  );
+}
+
+type Project = (typeof projects)[number];
+
+function ProjectCase({ project }: { project: Project }) {
+  const Icon = project.icon;
+
+  return (
+    <Link
+      href={`/work/${project.slug}` as Route}
+      className="project-case"
+      style={
+        {
+          "--project-accent": project.accent,
+          "--project-secondary": project.secondary
+        } as CSSProperties
+      }
+    >
+      <div className="project-card-copy">
+        <div className="project-card-topline">
+          <span>{project.number}</span>
+          <span>
+            <Icon className="h-6 w-6" />
+          </span>
+        </div>
+
+        <div>
+          <p className="project-eyebrow">{project.eyebrow}</p>
+          <h3>{project.name}</h3>
+          <p className="project-body">{project.body}</p>
+        </div>
+
+        <span className="case-open-link">
+          View detailed case study <ArrowUpRight className="h-4 w-4" />
+        </span>
+      </div>
+      <ProjectCardVisual project={project} />
+    </Link>
+  );
+}
+
+function ProjectCardVisual({ project }: { project: Project }) {
+  const isDashboard = project.name === "AuralCare";
+  const isEmail = project.name === "MailTrace";
+
+  return (
+    <div className={`project-card-visual ${isDashboard ? "project-visual-web" : "project-visual-mobile"}`} aria-hidden="true">
+      {isDashboard ? (
+        <div className="project-browser">
+          <div className="project-browser-top">
+            <span />
+            <span />
+            <span />
+          </div>
+          <div className="project-browser-grid">
+            <div className="project-browser-rail">
+              <span />
+              <span />
+              <span />
+              <span />
+            </div>
+            <div className="project-browser-main">
+              <div className="project-browser-hero">
+                <strong>24</strong>
+                <span>Appointments</span>
+              </div>
+              <div className="project-browser-list">
+                <span />
+                <span />
+                <span />
+              </div>
+            </div>
+            <div className="project-browser-side">
+              <span />
+              <p>AI voice ready</p>
+            </div>
+          </div>
+        </div>
+      ) : (
+        <div className="project-phone-set">
+          <div className="project-phone project-phone-back">
+            <span />
+            <span />
+          </div>
+          <div className="project-phone project-phone-front">
+            <div className="project-phone-speaker" />
+            <div className="project-phone-status">
+              <span>{isEmail ? "Privacy" : "Wallet"}</span>
+              <span>{isEmail ? "128" : "$86"}</span>
+            </div>
+            <div className="project-phone-hero">
+              <strong>{isEmail ? "Mail" : "Spend"}</strong>
+              <p>{isEmail ? "Email footprint" : "Receipt parsed"}</p>
+            </div>
+            <div className="project-phone-lines">
+              <span />
+              <span />
+              <span />
+            </div>
+          </div>
+        </div>
+      )}
+      <div className="project-visual-meta">
+        {project.screens.slice(0, 3).map((screen) => (
+          <span key={screen}>{screen}</span>
+        ))}
+      </div>
+    </div>
   );
 }

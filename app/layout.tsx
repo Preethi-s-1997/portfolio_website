@@ -9,14 +9,14 @@ export const metadata: Metadata = {
     template: "%s | Preethi Suresh"
   },
   description:
-    "A dark, immersive product design portfolio for Preethi Suresh featuring UX work, AI product explorations, MotivOS, and RUX.AI Design.",
+    "A dark, immersive product design portfolio for Preethi Suresh featuring UX work, AI product explorations, MotivOS, and Refyno.AI.",
   keywords: [
     "Preethi Suresh",
     "product design portfolio",
     "UX design",
     "AI product design",
     "MotivOS",
-    "RUX.AI Design"
+    "Refyno.AI"
   ],
   openGraph: {
     title: "Preethi Suresh - Product Design Portfolio",

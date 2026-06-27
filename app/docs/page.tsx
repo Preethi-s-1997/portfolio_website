@@ -30,7 +30,7 @@ export default function DocsPage() {
         <h1 className="mt-3 text-4xl font-semibold text-primary">Preethi Suresh Portfolio</h1>
         <p className="mt-5 max-w-3xl text-lg leading-8 text-secondary">
           This page documents the current portfolio build: a dark, parallax-driven product design
-          website with case-study storytelling and an AI Playground for MotivOS and RUX.AI Design.
+          website with case-study storytelling and an AI Playground for MotivOS and Refyno.AI.
         </p>
 
         <div className="mt-10 grid gap-4">
