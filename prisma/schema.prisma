@@ -1,0 +1,156 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  USER
+  ADMIN
+}
+
+enum QuoteStatus {
+  DRAFT
+  PENDING
+  APPROVED
+  PUBLISHED
+  ARCHIVED
+}
+
+enum PlanCode {
+  FREE
+  PRO
+  ENTERPRISE
+}
+
+enum BillingStatus {
+  TRIALING
+  ACTIVE
+  PAST_DUE
+  CANCELED
+  UNPAID
+}
+
+model User {
+  id               String      @id @default(cuid())
+  name             String?
+  email            String      @unique
+  image            String?
+  role             UserRole    @default(USER)
+  planCode         PlanCode    @default(FREE)
+  stripeCustomerId String?     @unique
+  createdAt        DateTime    @default(now())
+  updatedAt        DateTime    @updatedAt
+  apiKeys          ApiKey[]
+  requests         ApiRequest[]
+  analytics        AnalyticsEvent[]
+  billing          BillingAccount?
+  quotesCreated    Quote[]     @relation("QuoteCreator")
+}
+
+model Category {
+  id          String   @id @default(cuid())
+  slug        String   @unique
+  name        String
+  description String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  quotes      Quote[]
+}
+
+model Quote {
+  id              String      @id @default(cuid())
+  text            String
+  author          String
+  source          String?
+  tags            String[]
+  status          QuoteStatus @default(DRAFT)
+  featured        Boolean     @default(false)
+  scheduledFor    DateTime?
+  publishedAt     DateTime?
+  categoryId      String
+  category        Category    @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  creatorId       String?
+  creator         User?       @relation("QuoteCreator", fields: [creatorId], references: [id], onDelete: SetNull)
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+
+  @@index([status, scheduledFor])
+  @@index([categoryId])
+}
+
+model ApiKey {
+  id          String       @id @default(cuid())
+  name        String
+  keyHash     String       @unique
+  prefix      String
+  revokedAt   DateTime?
+  lastUsedAt  DateTime?
+  userId      String
+  user        User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  requests    ApiRequest[]
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+
+  @@index([userId])
+  @@index([prefix])
+}
+
+model ApiRequest {
+  id          String   @id @default(cuid())
+  path        String
+  method      String
+  statusCode  Int
+  latencyMs   Int
+  ipHash      String?
+  userAgent   String?
+  apiKeyId    String?
+  apiKey      ApiKey?  @relation(fields: [apiKeyId], references: [id], onDelete: SetNull)
+  userId      String?
+  user        User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  createdAt   DateTime @default(now())
+
+  @@index([createdAt])
+  @@index([apiKeyId, createdAt])
+  @@index([path, createdAt])
+}
+
+model AnalyticsEvent {
+  id          String   @id @default(cuid())
+  name        String
+  properties  Json?
+  userId      String?
+  user        User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  createdAt   DateTime @default(now())
+
+  @@index([name, createdAt])
+  @@index([userId])
+}
+
+model Plan {
+  id              String   @id @default(cuid())
+  code            PlanCode @unique
+  name            String
+  monthlyPriceCents Int
+  requestLimit    Int
+  apiKeyLimit     Int
+  stripePriceId   String?
+  features        String[]
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model BillingAccount {
+  id                   String        @id @default(cuid())
+  userId               String        @unique
+  user                 User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  status               BillingStatus @default(ACTIVE)
+  planCode             PlanCode      @default(FREE)
+  stripeSubscriptionId String?       @unique
+  currentPeriodEnd     DateTime?
+  createdAt            DateTime      @default(now())
+  updatedAt            DateTime      @updatedAt
+}
