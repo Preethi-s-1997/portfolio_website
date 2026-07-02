@@ -5,7 +5,6 @@ import type { Route } from "next";
 import {
   ArrowUpRight,
   BrainCircuit,
-  ChevronDown,
   LayoutGrid,
   MailSearch,
   Menu,
@@ -129,6 +128,21 @@ const playground = [
 
 const principles = ["Clarity before decoration", "Systems with feeling", "Research as momentum", "AI with human judgment"];
 
+const designPrimitives = [
+  {
+    title: "Research systems",
+    body: "Evidence, flows, and behavior patterns turned into interface decisions."
+  },
+  {
+    title: "AI product UX",
+    body: "Assistive workflows with visible confidence, correction, and human control."
+  },
+  {
+    title: "High-fidelity UI",
+    body: "Sharp product surfaces that make complex actions feel calm and usable."
+  }
+];
+
 export default function Home() {
   const [scrollY, setScrollY] = useState(0);
   const [open, setOpen] = useState(false);
@@ -174,20 +188,24 @@ export default function Home() {
         <div className="ambient-field" style={motion.field} />
       </div>
 
-      <header className="fixed left-0 right-0 top-0 z-50 border-b border-[#f5efe3]/10 bg-[#050505]/72 backdrop-blur-2xl">
+      <header className="site-header fixed left-0 right-0 top-0 z-50">
         <div className="mx-auto flex h-16 max-w-[1500px] items-center justify-between px-4 sm:px-6 lg:px-8">
           <Link href="/" className="flex items-center gap-3" aria-label="Preethi Suresh portfolio">
             <span className="brand-mark">PS</span>
-            <span className="hidden text-xs uppercase tracking-[0.36em] text-[#f5efe3]/70 sm:block">Preethi Suresh</span>
+            <span className="hidden text-xs uppercase tracking-[0.28em] text-[#f5efe3]/70 sm:block">Preethi Suresh</span>
           </Link>
 
-          <nav className="hidden items-center gap-8 text-xs uppercase tracking-[0.28em] text-[#f5efe3]/58 md:flex">
+          <nav className="hidden items-center gap-7 text-xs text-[#f5efe3]/62 md:flex">
             {nav.map(([label, href]) => (
               <a key={href} href={href} className="transition hover:text-[#f5efe3]">
                 {label}
               </a>
             ))}
           </nav>
+
+          <a className="header-pill hidden items-center gap-2 md:inline-flex" href="#contact">
+            Open for work <ArrowUpRight className="h-3.5 w-3.5" />
+          </a>
 
           <button
             aria-label={open ? "Close navigation" : "Open navigation"}
@@ -210,48 +228,72 @@ export default function Home() {
         )}
       </header>
 
-      <section className="relative z-10 min-h-screen px-4 pt-28 sm:px-6 lg:px-8">
-        <div className="mx-auto grid min-h-[calc(100vh-7rem)] max-w-[1500px] grid-rows-[auto_1fr_auto] gap-10">
-          <div className="flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between">
-            <p className="max-w-md text-sm leading-7 text-[#f5efe3]/62">
+      <section className="hero-product relative z-10 px-4 pt-28 sm:px-6 lg:px-8">
+        <div className="mx-auto grid max-w-[1500px] gap-10 lg:grid-cols-[0.98fr_1.02fr] lg:items-center">
+          <div className="hero-product-copy" style={motion.title}>
+            <p className="hero-kicker">
+              <Sparkles className="h-4 w-4" />
+              Design portfolio / AI product systems
+            </p>
+            <h1 className="product-title">
+              Product stories.
+              <span>Invisible friction.</span>
+              Designed out.
+            </h1>
+            <p className="hero-product-body">
               Product designer crafting research-backed interfaces, AI-native workflows, and design systems that feel sharp, useful, and alive.
             </p>
-            <a className="command-link w-fit" href="#contact">
-              Start a project <ArrowUpRight className="h-4 w-4" />
-            </a>
-          </div>
-
-          <div className="relative grid items-center">
-            <div className="hero-object hero-object-a" style={motion.objectA}>
-              <span>UX</span>
-            </div>
-            <div className="hero-object hero-object-b" style={motion.objectB}>
-              <span>AI</span>
-            </div>
-
-            <div style={motion.title}>
-              <p className="mb-5 inline-flex items-center gap-3 text-xs uppercase tracking-[0.36em] text-[#b8ff63]">
-                <Sparkles className="h-4 w-4" />
-                Design portfolio
-              </p>
-              <h1 className="mega-title">
-                <span>Human</span>
-                <span>signals,</span>
-                <span>future</span>
-                <span>systems.</span>
-              </h1>
+            <div className="hero-actions">
+              <a className="command-link" href="#work">
+                View work <ArrowUpRight className="h-4 w-4" />
+              </a>
+              <a className="command-link command-link-secondary" href="#ai-playground">
+                AI playground
+              </a>
             </div>
           </div>
 
-          <div className="grid gap-6 border-t border-[#f5efe3]/12 pb-10 pt-6 md:grid-cols-[0.7fr_1.3fr_0.45fr] md:items-end">
-            <p className="text-xs uppercase tracking-[0.34em] text-[#f5efe3]/46">UX research / Product strategy / AI design</p>
-            <p className="max-w-3xl text-xl leading-8 text-[#f5efe3]/80 md:text-2xl">
-              I help teams move from fuzzy product intent to interfaces with structure, emotion, and enough precision to ship.
-            </p>
-            <a href="#work" className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.28em] text-[#f5efe3]">
-              Explore <ChevronDown className="h-4 w-4 animate-bounce" />
-            </a>
+          <div className="workflow-panel" style={motion.objectA} aria-hidden="true">
+            <div className="workflow-tabs">
+              <span className="is-active">research.map()</span>
+              <span>flow.run()</span>
+              <span>ui.ship()</span>
+            </div>
+            <div className="workflow-code">
+              <p><span>01</span> export default createProductStory(&#123;</p>
+              <p><span>02</span> &nbsp;signals: [&quot;research&quot;, &quot;behavior&quot;, &quot;AI&quot;],</p>
+              <p><span>03</span> &nbsp;workflow: step.run(&quot;reduce-friction&quot;),</p>
+              <p><span>04</span> &nbsp;prototype: waitFor(&quot;human-confirmation&quot;),</p>
+              <p><span>05</span> &nbsp;output: &quot;high-fidelity interface&quot;</p>
+              <p><span>06</span> &#125;);</p>
+            </div>
+            <div className="workflow-graph">
+              <span />
+              <span />
+              <span />
+              <span />
+            </div>
           </div>
+        </div>
+
+        <div className="mx-auto mt-14 max-w-[1500px] border-y border-[#f5efe3]/10 py-5">
+          <div className="proof-row">
+            <span>UX research</span>
+            <span>Product strategy</span>
+            <span>AI design</span>
+            <span>Design systems</span>
+            <span>High-fidelity UI</span>
+          </div>
+        </div>
+
+        <div className="mx-auto grid max-w-[1500px] gap-4 py-10 md:grid-cols-3">
+          {designPrimitives.map((primitive, index) => (
+            <article key={primitive.title} className="primitive-card">
+              <span>0{index + 1}</span>
+              <h2>{primitive.title}</h2>
+              <p>{primitive.body}</p>
+            </article>
+          ))}
         </div>
       </section>
 
